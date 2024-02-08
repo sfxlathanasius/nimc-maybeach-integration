@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: maybeach-integration.jar
+    destination: /opt/cbs/
+    overwrite: true
+hooks:
+  BeforeInstall:
+    - location: BeforeInstallHook.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: AfterInstallHook.sh
+      timeout: 300
+      runas: root

@@ -1,0 +1,16 @@
+package com.seamfix.nimc.maybeach.enums;
+
+public enum RequestTypeEnum {
+    FETCH_ENROLLMENT_CENTERS,
+    ENTITY_STATUS,
+    PRE_ENROLLMENT_CHECK,
+    ENROLLMENT_NOTIFICATION,
+    DEVICE_ACTIVATION,
+    DEVICE_CERTIFICATION,
+    FETCH_ACTIVATION_DATA,
+    DEVICE_USER_LOGIN,
+    PAYMENT_STATUS_CHECK,
+    HEARTBEAT,
+    ;
+
+}

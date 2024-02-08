@@ -1,0 +1,1 @@
+package com.seamfix.nimc.maybeach.configs;
