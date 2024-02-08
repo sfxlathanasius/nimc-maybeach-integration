@@ -1,5 +1,6 @@
 package com.seamfix.nimc.maybeach.configs;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,4 +111,10 @@ public class AppConfig {
 				.setConnectTimeout(Duration.ofMillis(getCbsApiTimeout()))
 				.setReadTimeout(Duration.ofMillis(getCbsApiTimeout())).build();
 	}
+
+	@Bean
+	public ObjectMapper objectMapper(){
+		return new ObjectMapper();
+	}
+
 }
