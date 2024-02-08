@@ -2,7 +2,7 @@ package com.seamfix.nimc.maybeach.services.jms;
 
 import com.google.gson.Gson;
 import com.seamfix.nimc.maybeach.configs.AppConfig;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.JmsException;
@@ -35,7 +35,7 @@ public class JmsSender {
 		log.info("==Initializing JMS Sender...");
 	}
 
-	public boolean callPayloadBackup(String deviceId, String requestType, Date requestTime, Date responseTime, String requestPath, Object request, CbsResponse response) {
+	public boolean callPayloadBackup(String deviceId, String requestType, Date requestTime, Date responseTime, String requestPath, Object request, MayBeachResponse response) {
 		try {
 			if(!appConfig.isEnablePayload()){
 				log.info("Payload backup is disabled");

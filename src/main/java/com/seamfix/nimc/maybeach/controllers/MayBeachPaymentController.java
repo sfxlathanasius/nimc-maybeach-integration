@@ -3,10 +3,10 @@ package com.seamfix.nimc.maybeach.controllers;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentRequest;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusRequest;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import com.seamfix.nimc.maybeach.dto.CbsResponseData;
 import com.seamfix.nimc.maybeach.exceptions.GeneralException;
-import com.seamfix.nimc.maybeach.services.payment.CbsPaymentService;
+import com.seamfix.nimc.maybeach.services.payment.MayBeachPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +19,11 @@ import java.net.SocketTimeoutException;
 
 @RestController
 @RequestMapping("/payments")
-public class CbsPaymentController {
+public class MayBeachPaymentController {
 	
 	private static final String SIGNATURE_STR = "Signature";
 	@Autowired
-	CbsPaymentService cbsPaymentService;
+    MayBeachPaymentService cbsPaymentService;
 
 	@RequestMapping(value = "/consume", method = RequestMethod.POST)
 	public CbsResponseData paymentConsumption(@RequestBody CbsPaymentRequest cbsPaymentRequest, @RequestHeader("X-ACCOUNT-ID") String accountId, @RequestHeader(SIGNATURE_STR) String signature) throws SocketTimeoutException, GeneralException{
@@ -46,7 +46,7 @@ public class CbsPaymentController {
 	}
 
 	@RequestMapping(value = "/status/v2", method = RequestMethod.POST)
-	public CbsResponse paymentStatusV2(@RequestBody CbsPaymentStatusRequest request){
+	public MayBeachResponse paymentStatusV2(@RequestBody CbsPaymentStatusRequest request){
 		return cbsPaymentService.getPaymentStatusV2(request);
 	}
 
@@ -58,7 +58,7 @@ public class CbsPaymentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/status/v3", method = RequestMethod.POST)
-	public CbsResponse paymentStatusV3(@RequestBody CbsPaymentStatusRequest request){
+	public MayBeachResponse paymentStatusV3(@RequestBody CbsPaymentStatusRequest request){
 		return cbsPaymentService.getPaymentStatusV3(request);
 	}
 

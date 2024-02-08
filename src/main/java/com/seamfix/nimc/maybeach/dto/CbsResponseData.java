@@ -3,7 +3,7 @@ package com.seamfix.nimc.maybeach.dto;
 import java.io.Serializable;
 import java.util.List;
 
-public class CbsResponseData extends CbsResponse implements Serializable {
+public class CbsResponseData extends MayBeachResponse implements Serializable {
 	/**
 	 * 
 	 */

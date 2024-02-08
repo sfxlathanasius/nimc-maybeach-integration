@@ -8,13 +8,9 @@ package com.seamfix.nimc.maybeach.enums;
 @SuppressWarnings("PMD")
 public enum SettingsEnum {
 
-    MAYBEACH_TEST_URL("MAYBEACH-TEST-URL", "https://graph.maybeachtech.com.ng/graphql", "Maybeach url for test"),
-    MAYBEACH_PROD_URL("MAYBEACH-PROD-URL", "https://graph.maybeachtech.com.ng/graphql", "Maybeach url for production"),
-    MAYBEACH_TEST_AUTHORIZATION("MAYBEACH-TEST-AUTHORIZATION", "Basic ZHI5cGhpbDAwNzpjaGlHSVJMPTEyeDU=", "Maybeach authorization token for test"),
-    MAYBEACH_PROD_AUTHORIZATION("MAYBEACH-PROD-AUTHORIZATION", "Basic ZHI5cGhpbDAwNzpjaGlHSVJMPTEyeDU=", "Maybeach authorization token for production"),
-    MAYBEACH_PROD_TOKEN("MAYBEACH-PROD-TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYXBpOXUzNDUzNzgzODIxMTUxMzk5NjQ1IiwiYXBwbGljYXRpb25fa2V5IjoiOXUzNDUzNzgzODIxNzM4NDIyOTM5IiwiZXhwaXJhdGlvbiI6MTc5NDM5Mjc2MH0.bB9qfXsxCDfNyXVPxYq0NpaPucE_w0TxwOU4pZ8-FuI", "Maybeach token for production"),
-    MAYBEACH_TEST_TOKEN("MAYBEACH-TEST-TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYXBpOXUzNDUzNzgzODIxMTUxMzk5NjQ1IiwiYXBwbGljYXRpb25fa2V5IjoiOXUzNDUzNzgzODIxNzM4NDIyOTM5IiwiZXhwaXJhdGlvbiI6MTc5NDM5Mjc2MH0.bB9qfXsxCDfNyXVPxYq0NpaPucE_w0TxwOU4pZ8-FuI", "Maybeach token for TEST"),
-    MAYBEACH_MINIMUM_VERSION("MAYBEACH-MINIMUM-VERSION", "1.42", "This is used to configure the minimum version that should be able to push data to maybeach");
+    MAYBEACH_URL("MAYBEACH-URL", "https://graph.maybeachtech.com.ng/graphql", "Maybeach url for production"),
+    MAYBEACH_AUTHORIZATION("MAYBEACH-AUTHORIZATION", "Basic ZHI5cGhpbDAwNzpjaGlHSVJMPTEyeDU=", "Maybeach authorization token for production"),
+    MAYBEACH_TOKEN("MAYBEACH-TOKEN", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYXBpOXUzNDUzNzgzODIxMTUxMzk5NjQ1IiwiYXBwbGljYXRpb25fa2V5IjoiOXUzNDUzNzgzODIxNzM4NDIyOTM5IiwiZXhwaXJhdGlvbiI6MTc5NDM5Mjc2MH0.bB9qfXsxCDfNyXVPxYq0NpaPucE_w0TxwOU4pZ8-FuI", "Maybeach token for production");
 
     SettingsEnum(String name, String value, String description) {
         this.name = name;

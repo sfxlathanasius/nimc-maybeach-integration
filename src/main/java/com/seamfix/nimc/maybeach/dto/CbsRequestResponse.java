@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CbsRequestResponse extends CbsResponse{
+public class CbsRequestResponse extends MayBeachResponse {
 
 	/**
 	 * 

@@ -10,7 +10,7 @@ import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusRequest;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusRequestV3;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusResponse;
 import com.seamfix.nimc.maybeach.dto.CbsRequestResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import com.seamfix.nimc.maybeach.dto.CbsResponseData;
 import com.seamfix.nimc.maybeach.dto.PaymentStatusData;
 import com.seamfix.nimc.maybeach.dto.PaymentStatusResponse;
@@ -31,9 +31,9 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 @Service
 @SuppressWarnings({"PMD.NcssCount","PMD.CyclomaticComplexity", "all"})
-public class CbsPaymentService extends CbsService{
+public class MayBeachPaymentService extends MayBeachService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CbsPaymentService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MayBeachPaymentService.class);
 	
 	public CbsResponseData consumePayment(CbsPaymentRequest cbsPaymentRequest) {
 		return (CbsResponseData) callPaymentService(cbsPaymentRequest);
@@ -53,14 +53,14 @@ public class CbsPaymentService extends CbsService{
 		return callPaymentStatus(request);
 	}
 
-	public CbsResponse getPaymentStatusV2(CbsPaymentStatusRequest request) {
+	public MayBeachResponse getPaymentStatusV2(CbsPaymentStatusRequest request) {
 		if(appConfig.isMockPaymentVerificationResponse() ||!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
 		return callPaymentStatusV3(request); //call to v3 was done on purpose for legacy support
 	}
 
-	public CbsResponse getPaymentStatusV3(CbsPaymentStatusRequest request) {
+	public MayBeachResponse getPaymentStatusV3(CbsPaymentStatusRequest request) {
 		if(appConfig.isMockPaymentVerificationResponse() ||!appConfig.isCbsIntegrationEnabled()) {
 			if (request.getPaymentReference() != null) {
 				request.getPaymentReferences().add(request.getPaymentReference());
@@ -71,7 +71,7 @@ public class CbsPaymentService extends CbsService{
 	}
 
 	@Deprecated
-	public CbsResponse callPaymentStatusV2(CbsPaymentStatusRequest request) {
+	public MayBeachResponse callPaymentStatusV2(CbsPaymentStatusRequest request) {
 		Date requestTime = new Date();
 		logger.debug("request esa_Code {}",request.getEsaCode());
 		logger.debug("request payment reference {}",request.getPaymentReference());
@@ -236,7 +236,7 @@ public class CbsPaymentService extends CbsService{
 		return cbsResponse;
 	}
 
-	private CbsResponse callPaymentStatusV3(CbsPaymentStatusRequest request){
+	private MayBeachResponse callPaymentStatusV3(CbsPaymentStatusRequest request){
 		CbsRequestResponse response = new CbsRequestResponse();
 		response.setStatus(ResponseCodeEnum.ERROR.getCode());
 		response.setCode(ResponseCodeEnum.ERROR.getCode());

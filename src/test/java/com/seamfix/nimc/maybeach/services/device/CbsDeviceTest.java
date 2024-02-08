@@ -6,7 +6,7 @@ import com.seamfix.nimc.maybeach.dto.CbsDeviceCertificationRequest;
 import com.seamfix.nimc.maybeach.dto.CbsDeviceUserLoginRequest;
 import com.seamfix.nimc.maybeach.dto.CbsHeartBeatsRequest;
 import com.seamfix.nimc.maybeach.dto.CbsRequestResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import com.seamfix.nimc.maybeach.dto.DeviceActivationDataPojo;
 import com.seamfix.nimc.maybeach.dto.DeviceInfo;
 import com.seamfix.nimc.maybeach.services.jms.JmsSender;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class CbsDeviceTest {
 
     @Autowired
-    private CbsDeviceService target;
+    private MayBeachDeviceService target;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -38,7 +38,7 @@ public class CbsDeviceTest {
 
     @BeforeEach
     public void init(){
-        target = new CbsDeviceService();
+        target = new MayBeachDeviceService();
         target.setRestTemplate(restTemplate);
         target.setAppConfig(appConfig);
         jmsSender = Mockito.mock(JmsSender.class);
@@ -202,7 +202,7 @@ public class CbsDeviceTest {
         deviceCertificationRequest.setRequestedByLastName("Test");
         deviceCertificationRequest.setRequestedByFirstName("Test");
 
-        CbsResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
+        MayBeachResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
 
         assertNotNull(response);
         assertEquals(-1, response.getCode());
@@ -220,7 +220,7 @@ public class CbsDeviceTest {
         deviceCertificationRequest.setRequestedByLastName("Test");
         deviceCertificationRequest.setRequestedByFirstName("Test");
 
-        CbsResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
+        MayBeachResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
 
         assertNotNull(response);
         assertEquals(-1, response.getCode());
@@ -237,7 +237,7 @@ public class CbsDeviceTest {
         deviceCertificationRequest.setRequestedByLastName("Test");
         deviceCertificationRequest.setRequestedByFirstName("Test");
 
-        CbsResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
+        MayBeachResponse response = target.sendDeviceCertificationRequest(deviceCertificationRequest);
 
         assertNotNull(response);
         assertEquals(200, response.getCode());
@@ -248,7 +248,7 @@ public class CbsDeviceTest {
     public void sendHeartBeats_ShouldReturn400_WhenInvalidBodyParametersIsPassed() {
         CbsHeartBeatsRequest heartBeatsRequest = new CbsHeartBeatsRequest();
         heartBeatsRequest.setDeviceId("SAMSUNG-352231116003570");
-        CbsResponse response = target.sendHeartBeats(heartBeatsRequest);
+        MayBeachResponse response = target.sendHeartBeats(heartBeatsRequest);
         assertNotNull(response);
         assertEquals(400, response.getCode());
     }
@@ -263,7 +263,7 @@ public class CbsDeviceTest {
         heartBeatsRequest.setDeviceId("invalid-device-id");
         heartBeatsRequest.setEsaCode("NM0073");
 
-        CbsResponse response = target.sendHeartBeats(heartBeatsRequest);
+        MayBeachResponse response = target.sendHeartBeats(heartBeatsRequest);
         assertNotNull(response);
         assertEquals(404, response.getCode());
     }
@@ -295,7 +295,7 @@ public class CbsDeviceTest {
                 new DeviceInfo("FINGERPRINT_SCANNER")
         ));
 
-        CbsResponse response = target.sendHeartBeats(heartBeatsRequest);
+        MayBeachResponse response = target.sendHeartBeats(heartBeatsRequest);
         assertNotNull(response);
         assertEquals(200, response.getCode());
     }

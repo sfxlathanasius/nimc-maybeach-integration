@@ -1,5 +1,6 @@
 package com.seamfix.nimc.maybeach.configs;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class AppConfig {
 	private String cbsApiKey;
 
 	@Value("${nimc.maybeach.integration.enabled}")
-	protected boolean cbsIntegrationEnabled;
+	protected boolean mayBeachIntegrationEnabled;
 
 	@Value("${nimc.maybeach.payment.verification.mock.response.enabled}")
 	protected boolean mockPaymentVerificationResponse;
@@ -48,8 +49,8 @@ public class AppConfig {
 	@Value("${nimc.maybeach.fetch.activation.uri}")
 	protected String cbsFetchActivationUri;
 
-	@Value("${nimc.maybeach.login.uri}")
-	protected String cbsLoginUri;
+	@Value("${nimc.maybeach.uri}")
+	protected String mayBeachUri;
 
 	@Value("${nimc.maybeach.heartbeats.uri}")
 	protected String cbsHeartbeatsUri;
@@ -114,7 +115,8 @@ public class AppConfig {
 
 	@Bean
 	public ObjectMapper objectMapper(){
-		return new ObjectMapper();
+		return new ObjectMapper()
+				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 }

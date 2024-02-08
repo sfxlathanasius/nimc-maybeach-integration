@@ -2,7 +2,7 @@ package com.seamfix.nimc.maybeach.services.jms;
 
 import com.seamfix.nimc.maybeach.configs.AppConfig;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentRequest;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +44,7 @@ class JmsSenderTest {
         String requestPath = "request-path";
         Date requestTime = new Date();
         CbsPaymentRequest request = new CbsPaymentRequest();
-        CbsResponse response = new CbsResponse();
+        MayBeachResponse response = new MayBeachResponse();
 
         boolean calledPayloadBackup = underTest.callPayloadBackup(id, requestType, requestTime, requestTime, requestPath, request, response);
         assertTrue(calledPayloadBackup);
@@ -58,7 +58,7 @@ class JmsSenderTest {
         String requestPath = "request-path";
         Date requestTime = new Date();
         CbsPaymentRequest request = new CbsPaymentRequest();
-        CbsResponse response = new CbsResponse();
+        MayBeachResponse response = new MayBeachResponse();
 
         when(appConfig.isEnablePayload()).thenReturn(true);
 

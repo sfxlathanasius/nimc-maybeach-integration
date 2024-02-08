@@ -1,39 +1,22 @@
 package com.seamfix.nimc.maybeach.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
+import java.io.Serializable;
 
-@Data
-@ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class MayBeachResponse {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class MayBeachResponse implements Serializable{
 
-    private ApiData data;
-    private int code;
-
-    @Data
-    public static class ApiData {
-        @JsonProperty("addEnrolment_metadata")
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private List<AddEnrolmentMetadata> addEnrolmentMetadata;
-        @JsonProperty("enrolment_metadataID")
-        private EnrolmentMetadataId enrolmentMetadataId;
-    }
-
-    @Data
-    public static class AddEnrolmentMetadata {
-        private String id;
-    }
-    @Data
-    public static class EnrolmentMetadataId {
-        private String status;
-    }
+	private static final long serialVersionUID = 1898374484684010171L;
+	private int status = -1;
+	private String message = "Error processing MAYBEACH request";
+	private int code = -1;
+	private MayBeachClientAppUserData data;
 
 }
-
-

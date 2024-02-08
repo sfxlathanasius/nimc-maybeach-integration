@@ -4,8 +4,8 @@ import com.seamfix.nimc.maybeach.dto.CbsDeviceActivationRequest;
 import com.seamfix.nimc.maybeach.dto.CbsDeviceCertificationRequest;
 import com.seamfix.nimc.maybeach.dto.CbsDeviceUserLoginRequest;
 import com.seamfix.nimc.maybeach.dto.CbsHeartBeatsRequest;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
-import com.seamfix.nimc.maybeach.services.device.CbsDeviceService;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
+import com.seamfix.nimc.maybeach.services.device.MayBeachDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,34 +22,34 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/device")
-public class CbsDeviceController {
+public class MayBeachDeviceController {
 	
 	@Autowired
-	private CbsDeviceService cbsDeviceService;
+	private MayBeachDeviceService cbsDeviceService;
 
 	@PostMapping("/request-activation")
-	public CbsResponse deviceActivationRequest(@Valid @RequestBody CbsDeviceActivationRequest cbsDeviceActivationRequest){
+	public MayBeachResponse deviceActivationRequest(@Valid @RequestBody CbsDeviceActivationRequest cbsDeviceActivationRequest){
 		
 		return cbsDeviceService.sendDeviceActivationRequest(cbsDeviceActivationRequest);
 
 	}
 
 	@PostMapping("/request-certification")
-	public CbsResponse deviceCertificationRequest(@Valid @RequestBody CbsDeviceCertificationRequest deviceCertificationRequest){
+	public MayBeachResponse deviceCertificationRequest(@Valid @RequestBody CbsDeviceCertificationRequest deviceCertificationRequest){
 
 		return cbsDeviceService.sendDeviceCertificationRequest(deviceCertificationRequest) ;
 
 	}
 
 	@GetMapping("/activation-data/{deviceId}/{requestId}")
-	public CbsResponse fetchActivationDataRequest(@PathVariable("deviceId") String deviceId, @PathVariable("requestId") String requestId){
+	public MayBeachResponse fetchActivationDataRequest(@PathVariable("deviceId") String deviceId, @PathVariable("requestId") String requestId){
 
 		return cbsDeviceService.sendFetchActivationDataRequest(deviceId, requestId) ;
 
 	}
 
 	@PostMapping("/login")
-	public CbsResponse deviceUserLoginRequest(@Valid @RequestBody CbsDeviceUserLoginRequest userLoginRequest){
+	public MayBeachResponse deviceUserLoginRequest(@Valid @RequestBody CbsDeviceUserLoginRequest userLoginRequest){
 
 		return cbsDeviceService.sendDeviceUserLoginRequest(userLoginRequest) ;
 
@@ -61,7 +61,7 @@ public class CbsDeviceController {
 	}
 
 	@PostMapping("/heartbeats")
-	public CbsResponse sendHeartBeats(@Valid @RequestBody CbsHeartBeatsRequest heartBeatsRequest){
+	public MayBeachResponse sendHeartBeats(@Valid @RequestBody CbsHeartBeatsRequest heartBeatsRequest){
 		return cbsDeviceService.sendHeartBeats(heartBeatsRequest) ;
 	}
 }

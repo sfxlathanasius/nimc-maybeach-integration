@@ -22,21 +22,21 @@ import com.seamfix.nimc.maybeach.dto.CbsDeviceUpdateNotification;
 import com.seamfix.nimc.maybeach.dto.CbsEnrollmentNotificationRequest;
 import com.seamfix.nimc.maybeach.dto.CbsNewDeviceNotification;
 import com.seamfix.nimc.maybeach.dto.CbsRequestResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
-import com.seamfix.nimc.maybeach.services.payment.CbsService;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
+import com.seamfix.nimc.maybeach.services.payment.MayBeachService;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 
 @Slf4j
 @Service
 @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.TooManyMethods", "PMD.GodClass"})
-public class CbsEnrollmentService extends CbsService {
+public class MayBeachEnrollmentService extends MayBeachService {
 
 	private static final String EMPTY_CBS_BODY = "cbs response doesn't contain body";
 	private static final String PHONE_PRE_ENROLLMENT_ERROR_MESSAGE = "searchFieldValue is required";
 	private static final String DEMOGRAPHICS_PRE_ENROLLMENT_ERROR_MESSAGE = "firstName, lastName, gender, dob are required";
 
-	public CbsResponse sendEnrollmentNotificationService(CbsEnrollmentNotificationRequest cbsEnrollmentNotificationRequest) {
+	public MayBeachResponse sendEnrollmentNotificationService(CbsEnrollmentNotificationRequest cbsEnrollmentNotificationRequest) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -44,7 +44,7 @@ public class CbsEnrollmentService extends CbsService {
 		
 	}
 	
-	public CbsResponse sendNewDeviceNotification(CbsNewDeviceNotification cbsNewDeviceNotification) {
+	public MayBeachResponse sendNewDeviceNotification(CbsNewDeviceNotification cbsNewDeviceNotification) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -52,7 +52,7 @@ public class CbsEnrollmentService extends CbsService {
 		
 	}
 
-	public CbsResponse sendDeviceUpdateNotification(CbsDeviceUpdateNotification cbsDeviceUpdateNotification, String deviceId) {
+	public MayBeachResponse sendDeviceUpdateNotification(CbsDeviceUpdateNotification cbsDeviceUpdateNotification, String deviceId) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -60,7 +60,7 @@ public class CbsEnrollmentService extends CbsService {
 		
 	}
 
-	public CbsResponse fetchEnrollmentCenters(String deviceId, String fepCode) {
+	public MayBeachResponse fetchEnrollmentCenters(String deviceId, String fepCode) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -68,7 +68,7 @@ public class CbsEnrollmentService extends CbsService {
 		
 	}
 	
-	public CbsResponse getEntityStatus(String entityType, String entityIdentifier, String deviceId) {
+	public MayBeachResponse getEntityStatus(String entityType, String entityIdentifier, String deviceId) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -76,7 +76,7 @@ public class CbsEnrollmentService extends CbsService {
 		
 	}
 
-	public CbsResponse doPreEnrollmentCheck(CbsPreEnrollmentCheckRequest preEnrollmentCheckRequest) {
+	public MayBeachResponse doPreEnrollmentCheck(CbsPreEnrollmentCheckRequest preEnrollmentCheckRequest) {
 		if(!appConfig.isCbsIntegrationEnabled()) {
 			return getMockResponse();
 		}
@@ -100,7 +100,7 @@ public class CbsEnrollmentService extends CbsService {
 		return callDemographicPreEnrollmentCheck(preEnrollmentCheckRequest);
 	}
 
-	private CbsResponse callEnrollmentNotificationService(CbsEnrollmentNotificationRequest cbsEnrollmentNotificationRequest) {
+	private MayBeachResponse callEnrollmentNotificationService(CbsEnrollmentNotificationRequest cbsEnrollmentNotificationRequest) {
 		Date requestTime = new Date();
 
 		String enrollmentNotificationServiceUrl = appConfig.getCbsEnrolmentNotificationUri();
@@ -110,7 +110,7 @@ public class CbsEnrollmentService extends CbsService {
 		String requestJson = mapToJsonString(convertObjectToMap(cbsEnrollmentNotificationRequest));
 		setAccountIdDeviceIdSignatureHeaderParams(headers, cbsEnrollmentNotificationRequest.getDeviceId(), requestJson);
 
-		CbsResponse cbsResponse;
+		MayBeachResponse cbsResponse;
 
 		HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
 		Date responseTime;
@@ -154,7 +154,7 @@ public class CbsEnrollmentService extends CbsService {
 		return cbsResponse;
 	}
 
-	private CbsResponse callDeviceUpdateNotification(CbsDeviceUpdateNotification cbsDeviceUpdateNotification, String deviceId) {
+	private MayBeachResponse callDeviceUpdateNotification(CbsDeviceUpdateNotification cbsDeviceUpdateNotification, String deviceId) {
 		String deviceUpdateNotificationServiceUrl = appConfig.getCbsDeviceUpdateNotificationUri().replace("{deviceId}", safeString(deviceId));
 
 		log.info(deviceUpdateNotificationServiceUrl);
@@ -180,7 +180,7 @@ public class CbsEnrollmentService extends CbsService {
 		return cbsResponse;
 	}
 
-	private CbsResponse callFetchEnrollmentCenters(String deviceId, String fepCode) {
+	private MayBeachResponse callFetchEnrollmentCenters(String deviceId, String fepCode) {
 		Date requestTime = new Date();
 		String fetchEnrollmentServiceUrl = appConfig.getCbsFetchEnrolmentNotificationUri().replace("{fepCode}", safeString(fepCode));
 
@@ -221,7 +221,7 @@ public class CbsEnrollmentService extends CbsService {
 		return cbsResponse;
 	}
 	
-	private CbsResponse callGetEntityStatus(String entityType, String entityIdentifier, String deviceId) {
+	private MayBeachResponse callGetEntityStatus(String entityType, String entityIdentifier, String deviceId) {
 		Date requestTime = new Date();
 		String url = appConfig.getCbsEntityStatusUri().replace("{entityType}", safeString(entityType)).replace("{entityIdentifier}", safeString(entityIdentifier));
 
@@ -254,17 +254,17 @@ public class CbsEnrollmentService extends CbsService {
 		return cbsResponse;
 	}
 
-	private CbsResponse callPreEnrollmentCheck(CbsPreEnrollmentCheckRequest preEnrollmentCheckRequest) {
+	private MayBeachResponse callPreEnrollmentCheck(CbsPreEnrollmentCheckRequest preEnrollmentCheckRequest) {
 		Date requestTime = new Date();
 
 		String url = appConfig.getCbsPreEnrolmentCheckUri();
 		log.debug("Pre enrolment verification URL: {}", url);
 
-		CbsResponse cbsResponse;
+		MayBeachResponse cbsResponse;
 
 		String validationError = validateRequestParams(preEnrollmentCheckRequest);
 		if (validationError != null && !validationError.isEmpty()) {
-			cbsResponse = new CbsResponse(HttpStatus.BAD_REQUEST.value(), validationError);
+			cbsResponse = new MayBeachResponse(HttpStatus.BAD_REQUEST.value(), validationError);
 			doPayloadBackup(preEnrollmentCheckRequest.getDeviceId(), RequestTypeEnum.PRE_ENROLLMENT_CHECK.name(), requestTime, new Date(), url, preEnrollmentCheckRequest , cbsResponse);
 			return cbsResponse;
 		}
@@ -292,7 +292,7 @@ public class CbsEnrollmentService extends CbsService {
 
 		if (response.getBody() == null){
 			log.error(EMPTY_CBS_BODY);
-			cbsResponse = new CbsResponse();
+			cbsResponse = new MayBeachResponse();
 		} else {
 			cbsResponse = gson.fromJson(response.getBody(), CbsRequestResponse.class);
 			updateCbsResponse(cbsResponse);
@@ -403,7 +403,7 @@ public class CbsEnrollmentService extends CbsService {
 		return cbsResponse;
 	}
 
-	private void updateCbsResponse(CbsResponse cbsResponse) {
+	private void updateCbsResponse(MayBeachResponse cbsResponse) {
 		cbsResponse.setMessage("Pre-enrollment Check");
 		cbsResponse.setCode(0);
 		cbsResponse.setStatus(0);

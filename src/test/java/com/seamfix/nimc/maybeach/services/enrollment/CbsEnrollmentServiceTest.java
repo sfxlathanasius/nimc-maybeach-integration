@@ -7,7 +7,7 @@ import com.seamfix.nimc.maybeach.dto.CbsNewDeviceNotification;
 import com.seamfix.nimc.maybeach.dto.CbsPreEnrollmentCheckRequest;
 import com.seamfix.nimc.maybeach.dto.CbsPreEnrollmentVerificationResponse;
 import com.seamfix.nimc.maybeach.dto.CbsRequestResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import com.seamfix.nimc.maybeach.dto.Fingers;
 import com.seamfix.nimc.maybeach.services.jms.JmsSender;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class CbsEnrollmentServiceTest {
 
 	@Autowired
-	CbsEnrollmentService target;
+	MayBeachEnrollmentService target;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -43,7 +43,7 @@ public class CbsEnrollmentServiceTest {
 
 	@BeforeEach
 	void init(){
-		target = new CbsEnrollmentService();
+		target = new MayBeachEnrollmentService();
 		target.setRestTemplate(restTemplate);
 		target.setAppConfig(appConfig);
 		target.setJmsSender(Mockito.mock(JmsSender.class));
@@ -78,7 +78,7 @@ public class CbsEnrollmentServiceTest {
 		cbsNewDeviceNotification.setLocation("LEKKI");
 
 		target.sendNewDeviceNotification(cbsNewDeviceNotification);
-		CbsResponse response = target.sendNewDeviceNotification(cbsNewDeviceNotification);
+		MayBeachResponse response = target.sendNewDeviceNotification(cbsNewDeviceNotification);
 
 		assertNotNull(response);
 		assertEquals(409, response.getCode());
@@ -109,7 +109,7 @@ public class CbsEnrollmentServiceTest {
 		cbsNewDeviceNotification.setRequestId(deviceId);
 		cbsNewDeviceNotification.setLocation("LEKKI");
 
-		CbsResponse response = target.sendNewDeviceNotification(cbsNewDeviceNotification);
+		MayBeachResponse response = target.sendNewDeviceNotification(cbsNewDeviceNotification);
 
 		assertNotNull(response);
 		assertEquals(200, response.getCode());
@@ -164,7 +164,7 @@ public class CbsEnrollmentServiceTest {
 
 		cbsPreEnrollmentCheckRequest.setFingers(fingersList);
 
-		CbsResponse response = target.doPreEnrollmentCheck(cbsPreEnrollmentCheckRequest);
+		MayBeachResponse response = target.doPreEnrollmentCheck(cbsPreEnrollmentCheckRequest);
 		log.debug("code {}, msg {}, status {} ", response.getCode(), response.getMessage(), response.getStatus());
 
 		assertNotNull(response);
@@ -262,7 +262,7 @@ public class CbsEnrollmentServiceTest {
 
 	@Test
 	void fetchEnrollmentCenters_shouldReturnSuccess() {
-		CbsResponse cbsResponse = target.fetchEnrollmentCenters(deviceId, entityIdentifier);
+		MayBeachResponse cbsResponse = target.fetchEnrollmentCenters(deviceId, entityIdentifier);
 		assertNotNull(cbsResponse);
 		assertEquals(200, cbsResponse.getStatus());
 	}
@@ -271,7 +271,7 @@ public class CbsEnrollmentServiceTest {
 	void sendDeviceUpdateNotification_shouldReturn400_whenRequiredParameterIsMissing() {
 		var deviceNotification = new CbsDeviceUpdateNotification();
 
-		CbsResponse cbsResponse = target.sendDeviceUpdateNotification(deviceNotification, deviceId);
+		MayBeachResponse cbsResponse = target.sendDeviceUpdateNotification(deviceNotification, deviceId);
 		assertNotNull(cbsResponse);
 		assertEquals(400, cbsResponse.getCode());
 	}
@@ -280,7 +280,7 @@ public class CbsEnrollmentServiceTest {
 	void sendEnrollmentNotificationService_shouldReturn400_whenRequiredParameterIsMissing() {
 		var enrollmentNotificationRequest = new CbsEnrollmentNotificationRequest();
 
-		CbsResponse cbsResponse = target.sendEnrollmentNotificationService(enrollmentNotificationRequest);
+		MayBeachResponse cbsResponse = target.sendEnrollmentNotificationService(enrollmentNotificationRequest);
 		assertNotNull(cbsResponse);
 		assertEquals(400, cbsResponse.getCode());
 	}

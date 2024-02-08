@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestControllerAdvice
-public class CbsControllerAdvice {
+public class MayBeachControllerAdvice {
 
     @ExceptionHandler(InvalidFormatException.class)
     public void handleInvalidFormatException(HttpServletResponse response, InvalidFormatException exception) throws IOException {

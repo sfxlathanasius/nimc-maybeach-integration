@@ -3,7 +3,7 @@ package com.seamfix.nimc.maybeach.services.payment;
 import com.seamfix.nimc.maybeach.configs.AppConfig;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentRequest;
 import com.seamfix.nimc.maybeach.dto.CbsPaymentStatusRequest;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CbsPaymentServiceTest {
 
     @Autowired
-    private CbsPaymentService underTest;
+    private MayBeachPaymentService underTest;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -47,7 +47,7 @@ class CbsPaymentServiceTest {
 
     @Test
     void getPaymentStatusV2_shouldFailWhenNoServiceTypeIsPassed() {
-        CbsResponse response = underTest.getPaymentStatusV2(new CbsPaymentStatusRequest());
+        MayBeachResponse response = underTest.getPaymentStatusV2(new CbsPaymentStatusRequest());
         assertNotNull(response);
         assertEquals(-1, response.getCode());
     }

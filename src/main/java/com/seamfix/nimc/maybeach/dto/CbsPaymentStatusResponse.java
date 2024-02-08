@@ -1,6 +1,6 @@
 package com.seamfix.nimc.maybeach.dto;
 
-public class CbsPaymentStatusResponse extends CbsResponse {
+public class CbsPaymentStatusResponse extends MayBeachResponse {
 	
 	/**
 	 * 

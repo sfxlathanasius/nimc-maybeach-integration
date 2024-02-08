@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CbsPreEnrollmentVerificationResponse extends CbsResponse{
+public class CbsPreEnrollmentVerificationResponse extends MayBeachResponse {
 
 	private static final long serialVersionUID = 5088453035314880845L;
 

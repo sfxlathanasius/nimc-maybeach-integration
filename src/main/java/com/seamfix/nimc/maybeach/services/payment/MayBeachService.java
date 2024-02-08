@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gson.Gson;
 import com.seamfix.nimc.maybeach.configs.AppConfig;
 import com.google.gson.JsonSyntaxException;
 import com.seamfix.nimc.maybeach.dto.CbsRequestResponse;
-import com.seamfix.nimc.maybeach.dto.CbsResponse;
+import com.seamfix.nimc.maybeach.dto.MayBeachResponse;
 import com.seamfix.nimc.maybeach.services.jms.JmsSender;
 import com.seamfix.nimc.maybeach.utils.Sha512Impl;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,7 @@ import javax.validation.groups.Default;
 @Slf4j
 @Component
 @EnableAsync
-public class CbsService {
+public class MayBeachService {
 
 	@Autowired
 	protected RestTemplate restTemplate;
@@ -50,6 +49,8 @@ public class CbsService {
 	@Autowired
 	protected AppConfig appConfig;
 
+	@Autowired
+	private ObjectMapper objectMapper;
 	protected static final String CODE_STR = "code";
 	protected static final String STATUS = "status";
 	protected static final String DATA = "data";
@@ -57,7 +58,6 @@ public class CbsService {
 	protected static final String SIGNATURE = "Signature";
 	protected static final String MESSAGE = "message";
 	protected static final String X_DEVICE_ID = "X-DEVICE-ID";
-	protected final Gson gson = new Gson();
 	private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	public String validateRequestParams(Object request) {
@@ -87,7 +87,6 @@ public class CbsService {
 	}
 	
 	public Map<String, Object> convertObjectToMap (Object object) {
-		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.convertValue(object, Map.class);
 	}
 	
@@ -134,7 +133,7 @@ public class CbsService {
 	}
 
 	@Async
-	public void doPayloadBackup(String deviceId, String requestType, Date requestTime, Date responseTime, String requestPath, Object request, CbsResponse response) {
+	public void doPayloadBackup(String deviceId, String requestType, Date requestTime, Date responseTime, String requestPath, Object request, MayBeachResponse response) {
 		jmsSender.callPayloadBackup(deviceId, requestType, requestTime, responseTime, requestPath, request, response);
 	}
 
@@ -184,7 +183,7 @@ public class CbsService {
 	protected CbsRequestResponse handleJsonParseException(HttpStatusCodeException exception) {
 		CbsRequestResponse cbsResponse;
 		try {
-			cbsResponse = gson.fromJson(exception.getResponseBodyAsString(), CbsRequestResponse.class);
+			cbsResponse = objectMapper.convertValue(exception.getResponseBodyAsString(), CbsRequestResponse.class);
 		} catch (JsonSyntaxException e) {
 			log.error("Error parsing cbs response", e);
 			cbsResponse = new CbsRequestResponse(exception.getStatusCode().value(), exception.getResponseBodyAsString());
